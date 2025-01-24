@@ -93,7 +93,7 @@ namespace TacheApi.Controllers
             _context.Etapes.Add(etape);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEtape), new { id = etape.Id }, new EtapeDTO(etape));
+            return CreatedAtAction(nameof(GetEtape), new { id = etape.Id, idTache = idTache }, new EtapeDTO(etape));
         }
 
         [EndpointSummary("Supprime une étape d'une tâche")]
