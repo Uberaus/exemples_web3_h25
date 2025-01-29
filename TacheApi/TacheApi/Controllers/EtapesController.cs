@@ -28,6 +28,11 @@ namespace TacheApi.Controllers
         public async Task<ActionResult<IEnumerable<EtapeDTO>>> GetEtapes(
             [Description("L'identifiant de la tâche")] long idTache)
         {
+            if (!TacheExists(idTache))
+            {
+                return NotFound();
+            }
+
             return await _context.Etapes
                 .Where(etape => etape.TacheId == idTache)
                 .Select(etape => new EtapeDTO(etape))
@@ -84,11 +89,17 @@ namespace TacheApi.Controllers
         [EndpointSummary("Ajoute une étape à une tâche")]
         [EndpointDescription("Ajoute une tâche à une tâche dans la base de données")]
         [ProducesResponseType<EtapeDTO>(StatusCodes.Status201Created, "application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost]
         public async Task<ActionResult<EtapeDTO>> PostEtape(
             [Description("L'identifiant de la tâche")] long idTache,
             [FromBody][Description("L'étape à ajouter")] EtapeUpsertDTO etapeDTO)
         {
+            if (!TacheExists(idTache))
+            {
+                return NotFound();
+            }
+
             Etape etape = new Etape(etapeDTO, idTache);
             _context.Etapes.Add(etape);
             await _context.SaveChangesAsync();
@@ -122,6 +133,11 @@ namespace TacheApi.Controllers
         private bool EtapeExists(long id)
         {
             return _context.Etapes.Any(e => e.Id == id);
+        }
+
+        private bool TacheExists(long id)
+        {
+            return _context.Taches.Any(e => e.Id == id);
         }
     }
 }
