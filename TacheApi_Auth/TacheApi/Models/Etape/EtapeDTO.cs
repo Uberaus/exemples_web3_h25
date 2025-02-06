@@ -4,7 +4,7 @@ using TacheApi.OpenApi;
 
 namespace TacheApi.Models
 {
-    public class EtapeDetailsDTO
+    public class EtapeDTO
     {
         [Required]
         [Description("L'identifiant unique de l'étape")]
@@ -20,21 +20,11 @@ namespace TacheApi.Models
         [Example("false")]
         public bool EstAccomplie { get; set; }
 
-        [Required]
-        [Description("Lien vers la tâche associée à l'étape")]
-        public TacheDTO Tache { get; set; }
-
-        public EtapeDetailsDTO(Etape etape)
+        public EtapeDTO(Etape etape)
         {
-            if (etape.Tache is null)
-            {
-                throw new ArgumentNullException("etape.Tache");
-            }
-
             Id = etape.Id;
             Nom = etape.Nom;
             EstAccomplie = etape.EstAccomplie;
-            Tache = new TacheDTO(etape.Tache);
         }
     }
 }
