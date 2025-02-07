@@ -4,6 +4,7 @@ using TacheApi.OpenApi;
 
 namespace TacheApi.Models
 {
+    
     public class TacheUpsertDTO
     {
         [MaxLength(255)]
