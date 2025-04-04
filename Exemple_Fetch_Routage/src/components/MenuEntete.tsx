@@ -5,10 +5,8 @@ type Props = {
 export function MenuEntete({ changerPage }: Props) {
   return (
     <nav>
-      <button onClick={() => changerPage("ComposantRecuperationDonnees")}>
-        GET
-      </button>
-      <button onClick={() => changerPage("ComposantEnvoiDonnees")}>POST</button>
+      <button onClick={() => changerPage("fetch/get")}>GET</button>
+      <button onClick={() => changerPage("fetch/post")}>POST</button>
     </nav>
   );
 }

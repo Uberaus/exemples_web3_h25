@@ -1,19 +1,29 @@
 import { useState } from "react";
-import { ComposantRecuperationDonnees } from "./components/ComposantRecuperationDonnees"
-import { MenuEntete } from "./components/MenuEntete"
-import { ComposantEnvoiDonnees } from "./components/ComposantEnvoiDonnees";
+import { MenuEntete } from "~/components/MenuEntete"
+import { Accueil } from "~/pages/Accueil";
+import { PageGet } from "~/pages/PageGet";
+import { PagePost } from "~/pages/PagePost";
 
-
-function App() {
+export function App() {
   const [page, setPage] = useState("");
+
+  function afficherPageCourante() {
+    switch (page) {
+      case "":
+        return <Accueil />
+      case "fetch/get":
+        return <PageGet />
+      case "fetch/post":
+        return <PagePost />
+      default:
+        return <h1>404 Not Found</h1>
+    }
+  }
 
   return (
     <>
       <MenuEntete changerPage={setPage} />
-      {page === "ComposantRecuperationDonnees" && <ComposantRecuperationDonnees />}
-      {page === "ComposantEnvoiDonnees" && <ComposantEnvoiDonnees />}
+      {afficherPageCourante()}
     </>
   )
 }
-
-export default App
