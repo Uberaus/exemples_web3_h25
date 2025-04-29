@@ -38,7 +38,7 @@ public class FichiersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("{fichierId}")]
-    public async Task<ActionResult<FileResult>> GetBinaireFichier(
+    public async Task<ActionResult> GetBinaireFichier(
         [Description("L'ID du fichier")] long fichierId
     )
     {
