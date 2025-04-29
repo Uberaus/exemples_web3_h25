@@ -21,15 +21,10 @@ export function Messages() {
   useEffect(() => {
     let timeoutId: number;
     const abortControler = new AbortController();
-    let estAnnule = false;
 
     async function recupererMessages() {
       if (!groupeId) {
-        // Si le composant n'est pas démonté, on relance le rafraîchissement des messages
-        if (!estAnnule) {
-          // Rafrachit les messages après 1 seconde
-          timeoutId = setTimeout(recupererMessages, 1000);
-        }
+        setMessages([]);
         return;
       }
 
@@ -83,11 +78,8 @@ export function Messages() {
 
         setErreur(err.message);
       } finally {
-        // Si le composant n'est pas démonté, on relance le rafraîchissement des messages
-        if (!estAnnule) {
-          // Rafrachit les messages après 1 seconde
-          timeoutId = setTimeout(recupererMessages, 1000);
-        }
+        // Rafrachit les messages après 1 seconde
+        timeoutId = setTimeout(recupererMessages, 1000);
       }
     }
 
@@ -99,7 +91,6 @@ export function Messages() {
     return () => {
       // Arrête le rafraîchissement des messages pour éviter les appels en double et les fuites de mémoire
       clearTimeout(timeoutId);
-      estAnnule = true;
       abortControler.abort();
     };
   }, [groupeId, utilisateur]); // Le hook useEffect s'exécute à chaque changement de groupeIdCourant
